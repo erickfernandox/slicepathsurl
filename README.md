@@ -51,12 +51,13 @@ An RCE vulnerability, CVE-2017-5638, was discovered in Apache Struts in an appli
 Below are additional examples where SlicePathURL was used to identify vulnerabilities that were not located in the root directory of the domain, but rather in a subdirectory:
 
 ```bash
-[CVE-2019-6802] [http] [medium] https://example.com/path_level2/%0d%0aSet-Cookie:crlfinjection=1; -> CRLF Injection
-[CVE-2018-11784] [http] [low] https://subdomain.example.com/path_level2///interact.sh/%2F -> Open Redirect
+[crlf-injection] [http] [medium] https://example.com/path_level2/%0d%0aSet-Cookie:crlfinjection=1; -> CRLF Injection
+[open-redirect] [http] [low] https://subdomain.example.com/path_level2///interact.sh/%2F -> Open Redirect
 [elmah-log-file] [http] [medium] https://xxx.example.com.br/perdiminhasenha/elmah.axd?AspxAutoDetectCookieSupport=1 -> Debug Information Exposed
 [git-exposed] [http] [medium] https://xxx.example.com.br/path_level2/.git/config -> Git Exposed
-```
+[cache-poisoning] [http] [low] https://www.example.com/insights/?cb=poisoning [host.cache.interact.sh] - X-Forwarded-Host Cache Poisioning 
 
+```
 
 ## - How does SlicePathURL work?
 
