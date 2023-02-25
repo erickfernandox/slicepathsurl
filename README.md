@@ -56,7 +56,6 @@ Below are additional examples where SlicePathURL was used to identify vulnerabil
 [elmah-log-file] [http] [medium] https://xxx.example.com.br/perdiminhasenha/elmah.axd?AspxAutoDetectCookieSupport=1 -> Debug Information Exposed
 [git-exposed] [http] [medium] https://xxx.example.com.br/path_level2/.git/config -> Git Exposed
 [cache-poisoning] [http] [low] https://www.example.com/insights/?cb=poisoning [host.cache.interact.sh] - X-Forwarded-Host Cache Poisioning 
-
 ```
 
 ## - How does SlicePathURL work?
@@ -74,6 +73,8 @@ Identifying Git Exposed in 3 levels of URLs:
 https://example.com/
 https://example.com/level2<
 https://example.com/level2/level3
+
+```
 
 Next, the URLs previously acquired via gauplus can be used in conjunction with httpx to extract the three-level hierarchy of the URLs and search for the .git file at every level of the URL. An example of this is shown below:
 
