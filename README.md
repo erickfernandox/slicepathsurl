@@ -68,15 +68,20 @@ subfinder -d example.com | gauplus | slicepathurl -l 2 > urls_all_paths_level2.t
 cat urs_all_paths_level2.txt | nuclei -tags crlf,rce,redirect
 ```
 
-Indetificando Git Exposed em 3 niveis:
-
-<br>O slicepathurl pega uma URL e divide em 3 niveis:</br>
+Identifying Git Exposed in 3 levels of URLs:
+<br>The slicepathurl tool takes a URL and divides it into 3 levels:</br>
 <p>https://example.com/</p>
 <p>https://example.com/level2</p>
 <p>https://example.com/level2/level3</p>
 
+Next, the URLs previously acquired via gauplus can be used in conjunction with httpx to extract the three-level hierarchy of the URLs and search for the .git file at every level of the URL. An example of this is shown below:
+
 ```bash
 cat urls_all_paths_level2.txt | slicepathurl -n 3 | httpx -path /.git/config -mr "refs/heads"
-```
+
+https://example.com/.git/config
 https://example.com/level2/.git/config
 https://example.com/level2/level3/.git/config
+
+```
+
