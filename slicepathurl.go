@@ -20,19 +20,8 @@ func containsPercent(word string) bool {
 }
 
 func main() {
-	// Define os argumentos do script
-	//listaPtr := flag.String("l", "", "Caminho da lista de URLs")
-	nivelPtr := flag.Int("n", 2, "Nível [1, 2 ou 3]")
+	nivelPtr := flag.Int("l", 2, "Level [1, 2 or 3]")
 	flag.Parse()
-
-	// Abre o arquivo com a lista de URLs
-	//	arquivo, err := os.Open(*listaPtr)
-	//	if err != nil {
-	//	panic(err)
-	//}
-	//defer arquivo.Close()
-
-	//scanner := bufio.NewScanner(arquivo)
 
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Scan()
