@@ -60,6 +60,8 @@ Below are additional examples where SlicePathURL was used to identify vulnerabil
 
 ## - How does SlicePathURL work?
 
+
+```bash
 echo "example.com"|gauplus
 
 https://example.com/applications/data/user?id=123
@@ -91,6 +93,8 @@ https://example.com/applications/data/user
 https://example.com/applications/data/config
 https://example.com/applications/finder/
 https://example.com/applications/finder/search
+
+```
 
 
 ```bash
