@@ -62,7 +62,7 @@ Below are additional examples where SlicePathURL was used to identify vulnerabil
 
 
 ```bash
-echo "example.com"|gauplus
+echo "example.com"|gauplus > example_gauplus.txt
 
 https://example.com/applications/data/user?id=123
 https://example.com/applications/data/user?id=123&msg=error
@@ -72,19 +72,19 @@ https://example.com/applications/data/config/info?data={}
 https://example.com/applications/finder/search?q=123
 https://example.com/applications/finder/search?q=123&order=desc
 
-slicepathurl -l 2
+cat example_gauplus.txt|slicepathurl -l 2
 
 https://example.com/
 https://example.com/applications
 
-slicepathurl -l 3
+cat example_gauplus.txt|slicepathurl -l 3
 
 https://example.com/
 https://example.com/applications
 https://example.com/applications/data
 https://example.com/applications/finder/
 
-slicepathurl -l 4
+cat example_gauplus.txt|slicepathurl -l 4
 
 https://example.com/
 https://example.com/applications
