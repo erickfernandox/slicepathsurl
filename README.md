@@ -60,6 +60,38 @@ Below are additional examples where SlicePathURL was used to identify vulnerabil
 
 ## - How does SlicePathURL work?
 
+echo "example.com"|gauplus
+
+https://example.com/applications/data/user?id=123
+https://example.com/applications/data/user?id=123&msg=error
+https://example.com/applications/data/user/config?id=1
+https://example.com/applications/data/config?test=tese
+https://example.com/applications/data/config/info?data={}
+https://example.com/applications/finder/search?q=123
+https://example.com/applications/finder/search?q=123&order=desc
+
+slicepathurl -l 2
+
+https://example.com/
+https://example.com/applications
+
+slicepathurl -l 3
+
+https://example.com/
+https://example.com/applications
+https://example.com/applications/data
+https://example.com/applications/finder/
+
+slicepathurl -l 4
+
+https://example.com/
+https://example.com/applications
+https://example.com/applications/data
+https://example.com/applications/data/user
+https://example.com/applications/data/config
+https://example.com/applications/finder/
+https://example.com/applications/finder/search
+
 
 ```bash
 subfinder -d example.com | gauplus | slicepathurl -l 2 > urls_all_paths_level2.txt
