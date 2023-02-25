@@ -40,7 +40,7 @@ echo "https://subdomain.example.com/extranet/"|nuclei -tags rce
 [2023-01-01 23:54:42] [CVE-2017-5638] [http] [critical] https://subdomain.example.com/extranet/
 ```
 
-An RCE vulnerability, CVE-2017-5638, was discovered in Apache Struts in an application hosted at https://example.com/extranet, but it was not found in the root directory of https://example.com/.
+An RCE vulnerability, CVE-2017-5638, was discovered in Apache Struts in an application hosted at https://example.com/extranet/, but it was not found in the root directory of https://example.com/.
 
 
 ## - How does SlicePathURL work?
