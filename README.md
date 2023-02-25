@@ -3,14 +3,15 @@
 
 <p align="center">
   <a href="#--usage--explanation">Usage</a> •
-  <a href="#--installation--requirements">Installation</a>
-  <a href="#--why--use-slicepathurl">Why use SlicePathURL?</a>
+  <a href="#--installation--requirements">Installation</a> *
+  <a href="#--why">Why use SlicePathURL?</a>
 </p>
 
 <h3 align="center">SlicePathURL slices a URL into directory levels to complement tools like Nuclei in searching for vulnerabilities in directories beyond the root of the URL.</h3>
 
 
 ## - Installation & Requirements:
+
 ```bash
 > go install github.com/erickfernandox/slicepathurl@latest
 ```
