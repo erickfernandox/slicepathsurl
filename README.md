@@ -35,13 +35,13 @@ Sometimes, Nuclei may fail to identify a vulnerability in the root domain, for e
 Below is a real example that was found:
 
 ```bash
-echo "https://subdomain.example.com/"|nuclei -tags rce
+> echo "https://subdomain.example.com/"|nuclei -tags rce
 
 [INF] No results found. Better luck next time!
 ```
 
 ```bash
-echo "https://subdomain.example.com/extranet/"|nuclei -tags rce
+> echo "https://subdomain.example.com/extranet/"|nuclei -tags rce
 
 [2023-01-01 00:00:00] [CVE-2017-5638] [http] [critical] https://subdomain.example.com/extranet/
 ```
@@ -63,16 +63,17 @@ Below are additional examples where SlicePathURL was used to identify vulnerabil
 
 
 ```bash
-
-subfinder -d example.com | gauplus | slicepathurl -l 2 > urls_all_paths_level2.txt
-cat urs_all_paths_level2.txt | nuclei -tags crlf,rce,redirect
+> subfinder -d example.com | gauplus | slicepathurl -l 2 > urls_all_paths_level2.txt
+> cat urs_all_paths_level2.txt | nuclei -tags crlf,rce,redirect
 ```
 
 Identifying Git Exposed in 3 levels of URLs:
 <br>The slicepathurl tool takes a URL and divides it into 3 levels:</br>
-<p>https://example.com/</p>
-<p>https://example.com/level2</p>
-<p>https://example.com/level2/level3</p>
+
+```bash
+https://example.com/
+https://example.com/level2<
+https://example.com/level2/level3
 
 Next, the URLs previously acquired via gauplus can be used in conjunction with httpx to extract the three-level hierarchy of the URLs and search for the .git file at every level of the URL. An example of this is shown below:
 
