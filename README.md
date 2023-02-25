@@ -71,9 +71,9 @@ cat urs_all_paths_level2.txt | nuclei -tags crlf,rce,redirect
 Indetificando Git Exposed em 3 niveis:
 
 <br>O slicepathurl pega uma URL e divide em 3 niveis:</br>
-<br>https://example.com/</br>
-<br>https://example.com/level2</br>
-<br>https://example.com/level2/level3</br>
+<p>https://example.com/</p>
+<p>https://example.com/level2</p>
+<p>https://example.com/level2/level3</p>
 
 ```bash
 cat urls_all_paths_level2.txt | slicepathurl -n 3 | httpx -path /.git/config -mr "refs/heads"
