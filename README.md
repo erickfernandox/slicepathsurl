@@ -71,7 +71,7 @@ Identifying Git Exposed in 3 levels of URLs:
 
 ```bash
 https://example.com/
-https://example.com/level2<
+https://example.com/level2
 https://example.com/level2/level3
 
 ```
