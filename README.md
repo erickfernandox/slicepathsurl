@@ -51,3 +51,9 @@ An RCE vulnerability, CVE-2017-5638, was discovered in Apache Struts in an appli
 ## - How does SlicePathURL work?
 
 
+```bash
+
+subfinder -d example.com | gauplus | slicepathurl -l 2 > urls_all_paths_level2.txt
+cat urs_all_paths_level2.txt | nuclei -tags crlf,rce,redirect
+
+```
