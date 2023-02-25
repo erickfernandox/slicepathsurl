@@ -20,7 +20,13 @@ OR
 ```
 <br>
 
-## - How does slicepathurl work?
+## - Why use SlicePathURL?
+
+Examples:
+
+Sometimes, the Nuclei fails to identify a vulnerability in the root domain, such as exemple: https://example.com/, but it may exist in paths after the root, such as https://example.com/path_one/. 
+
+Below is a real example that was found:
 
 ```bash
 echo "https://subdomain.example.com/"|nuclei -tags rce
@@ -33,3 +39,8 @@ echo "https://subdomain.example.com/extranet/"|nuclei -tags rce
 
 [2023-01-01 23:54:42] [CVE-2017-5638] [http] [critical] https://subdomain.example.com/extranet/
 ```
+
+
+## - How does SlicePathURL work?
+
+
