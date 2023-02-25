@@ -6,4 +6,16 @@
   <a href="#--installation--requirements">Installation</a>
 </p>
 
-go install github.com/erickfernandox/slicepathurl@latest
+## - Installation & Requirements:
+```bash
+> go install github.com/erickfernandox/slicepathurl@latest
+```
+OR
+```bash
+> git clone https://github.com/erickfernandox/slicepathurl.git
+> cd slicepathurl
+> go build slicepathurl.go
+> chmod +x slicepathurl
+> ./slicepathurl -h
+```
+<br>
