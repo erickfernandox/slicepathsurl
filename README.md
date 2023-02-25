@@ -43,10 +43,18 @@ echo "https://subdomain.example.com/"|nuclei -tags rce
 ```bash
 echo "https://subdomain.example.com/extranet/"|nuclei -tags rce
 
-[2023-01-01 23:54:42] [CVE-2017-5638] [http] [critical] https://subdomain.example.com/extranet/
+[2023-01-01 00:00:00] [CVE-2017-5638] [http] [critical] https://subdomain.example.com/extranet/
 ```
 
 An RCE vulnerability, CVE-2017-5638, was discovered in Apache Struts in an application hosted at https://example.com/extranet/, but it was not found in the root directory of https://example.com/.
+
+Below are additional examples where SlicePathURL was used to identify vulnerabilities that were not located in the root directory of the domain, but rather in a subdirectory:
+
+[2023-01-01 00:00:00] [CVE-2019-6802] [http] [medium] https://example.com/path_level2/%0d%0aSet-Cookie:crlfinjection=1; -> CRLF Injection
+[2023-01-01 00:00:00] [CVE-2018-11784] [http] [low] https://subdomain.example.com/path_level2///interact.sh/%2F -> Open Redirect
+[2023-01-01 00:00:00] [elmah-log-file] [http] [medium] https://xxx.example.com.br/perdiminhasenha/elmah.axd?AspxAutoDetectCookieSupport=1 -> Debug Information Exposed
+[2023-01-01 00:00:00] [git-exposed] [http] [medium] https://xxx.example.com.br/path_level2/.git/config -> Git Exposed
+
 
 
 ## - How does SlicePathURL work?
@@ -56,5 +64,16 @@ An RCE vulnerability, CVE-2017-5638, was discovered in Apache Struts in an appli
 
 subfinder -d example.com | gauplus | slicepathurl -l 2 > urls_all_paths_level2.txt
 cat urs_all_paths_level2.txt | nuclei -tags crlf,rce,redirect
-
 ```
+
+Indetificando Git Exposed em 3 niveis:
+
+O slicepathurl pega uma URL e divide em 3 niveis:
+https://example.com/level2
+https://example.com/level2/level3
+
+```bash
+cat urls_all_paths_level2.txt | slicepathurl -n 3 | httpx -path /.git/config -mr "refs/heads"
+```
+https://example.com/level2/.git/config
+https://example.com/level2/level3/.git/config
