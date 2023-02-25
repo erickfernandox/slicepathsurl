@@ -20,15 +20,16 @@ OR
 ```
 <br>
 
-<p align="center">
-  <a href="#--usage--explanation">Usage</a> •
-  <a href="#--how-work">How does slicepathurl work?</a>
-</p>
+## - How does slicepathurl work?
 
+```bash
 echo "https://subdomain.example.com/"|nuclei -tags rce
 
 [INF] No results found. Better luck next time!
+```
 
+```bash
 echo "https://subdomain.example.com/extranet/"|nuclei -tags rce
 
 [2023-01-01 23:54:42] [CVE-2017-5638] [http] [critical] https://subdomain.example.com/extranet/
+```
