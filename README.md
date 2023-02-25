@@ -24,7 +24,7 @@ OR
 
 Examples:
 
-Sometimes, the Nuclei fails to identify a vulnerability in the root domain, such as exemple: https://example.com/, but it may exist in paths after the root, such as https://example.com/path_one/. 
+Sometimes, Nuclei may fail to identify a vulnerability in the root domain, for example, in https://example.com/. However, it is possible that vulnerabilities may exist in paths beyond the root domain, such as in https://example.com/path_one/. 
 
 Below is a real example that was found:
 
