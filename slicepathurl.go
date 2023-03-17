@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/url"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -20,17 +21,15 @@ func containsPercent(word string) bool {
 }
 
 func main() {
-	nivelPtr := flag.Int("l", 2, "Level [1, 2 or 3]")
+
+	levelPtr := flag.Int("l", 2, "Level [1, 2 or 3]")
 	flag.Parse()
 
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Scan()
 
-	//url := strings.TrimSpace(scanner.Text())
+	var urlsList []string
 
-	var listaUrls []string
-
-	// Percorre a lista de URLs e cria a lista resultante com base no nível informado
 	for scanner.Scan() {
 
 		urlStr := scanner.Text()
@@ -38,60 +37,67 @@ func main() {
 			continue
 		}
 
-		partesUrl, err := url.Parse(urlStr)
+		urlParts, err := url.Parse(urlStr)
 		if err != nil {
 			panic(err)
 		}
 
-		partesPath := strings.Split(partesUrl.Path, "/")
+		pathParts := strings.Split(urlParts.Path, "/")
 
-		for i := 0; i < *nivelPtr; i++ {
+		for i := 0; i < *levelPtr; i++ {
 			if i == 0 {
-				urlBase := partesUrl.Scheme + "://" + partesUrl.Host
-				listaUrls = append(listaUrls, urlBase)
+				baseUrl := urlParts.Scheme + "://" + urlParts.Host
+				urlsList = append(urlsList, baseUrl)
 			} else {
-				if len(partesPath) < i+1 {
+				if len(pathParts) < i+1 {
 					break
 				}
-				path := strings.Join(partesPath[:i+1], "/")
+				path := strings.Join(pathParts[:i+1], "/")
+				counter := strings.Count(path, "-")
 
-				if strings.ContainsRune(strings.TrimSuffix(path, "/"), ';') || strings.ContainsRune(strings.TrimSuffix(path, "/"), '.') || strings.ContainsRune(strings.TrimSuffix(path, "/"), '-') {
+				if strings.ContainsRune(strings.TrimSuffix(path, "/"), ';') || strings.ContainsRune(strings.TrimSuffix(path, "/"), '.') || counter != 1 {
 					continue
 				} else {
-					urlResultante := partesUrl.Scheme + "://" + partesUrl.Host + "/" + path
+					pathVerify := path[1:]
+					if _, err := strconv.Atoi(pathVerify); err == nil {
+						continue
+					} else {
 
-					index := strings.Index(urlResultante, "//") // Encontra o índice da primeira ocorrência de '//'
+						resultantUrl := urlParts.Scheme + "://" + urlParts.Host + "/" + path
 
-					if index != -1 { // Se encontrar a primeira ocorrência de '//'
-						// Procura o índice da próxima ocorrência de '//', a partir do índice da primeira ocorrência encontrada
-						secondIndex := strings.Index(urlResultante[index+2:], "//")
+						index := strings.Index(resultantUrl, "//") // Finds the index of the first occurrence of '//'
 
-						if secondIndex != -1 { // Se encontrar a segunda ocorrência de '//'
-							// Substitui a segunda ocorrência de '//' por '/'
-							urlResultante = urlResultante[:index+2+secondIndex] + "/" + urlResultante[index+2+secondIndex+2:]
+						if index != -1 { 
+							
+							secondIndex := strings.Index(resultantUrl[index+2:], "//")
+
+							if secondIndex != -1 { 
+								resultantUrl = resultantUrl[:index+2+secondIndex] + "/" + resultantUrl[index+2+secondIndex+2:]
+							}
 						}
-					}
 
-					listaUrls = append(listaUrls, urlResultante)
+						urlsList = append(urlsList, resultantUrl)
+					}
 				}
 			}
 		}
 	}
 
-	// Remove URLs repetidas da lista resultante
-	mapaUrls := make(map[string]bool)
-	for _, url := range listaUrls {
-		mapaUrls[url] = true
+	// Remove URLs duplicados dentro da Lista
+	urlsMap := make(map[string]bool)
+	for _, url := range urlsList {
+		urlsMap[url] = true
 	}
 
-	var listaUrlsResultantes []string
-	for url := range mapaUrls {
-		listaUrlsResultantes = append(listaUrlsResultantes, url)
+	var resultantUrlsList []string
+	for url := range urlsMap {
+		resultantUrlsList = append(resultantUrlsList, url)
 	}
 
-	// Imprime a lista resultante
-	for _, url := range listaUrlsResultantes {
+	// Prints the resulting list
+	for _, url := range resultantUrlsList {
 
 		fmt.Println(url)
 	}
+
 }
