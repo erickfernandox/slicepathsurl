@@ -55,7 +55,7 @@ func main() {
 				path := strings.Join(pathParts[:i+1], "/")
 				counter := strings.Count(path, "-")
 
-				if strings.ContainsRune(strings.TrimSuffix(path, "/"), ';') || strings.ContainsRune(strings.TrimSuffix(path, "/"), '.') || counter != 1 {
+				if strings.ContainsRune(strings.TrimSuffix(path, "/"), ';') || strings.ContainsRune(strings.TrimSuffix(path, "/"), '.') || counter > 1 {
 					continue
 				} else {
 					pathVerify := path[1:]
