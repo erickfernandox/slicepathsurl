@@ -94,7 +94,6 @@ func main() {
 		resultantUrlsList = append(resultantUrlsList, url)
 	}
 
-	// Prints the resulting list
 	for _, url := range resultantUrlsList {
 
 		fmt.Println(url)
