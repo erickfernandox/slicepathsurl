@@ -27,7 +27,7 @@ func main() {
 
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Scan()
-
+	
 	var urlsList []string
 
 	for scanner.Scan() {
@@ -58,20 +58,21 @@ func main() {
 				if strings.ContainsRune(strings.TrimSuffix(path, "/"), ';') || strings.ContainsRune(strings.TrimSuffix(path, "/"), '.') || counter > 1 {
 					continue
 				} else {
-					pathVerify := path[1:]
-					if _, err := strconv.Atoi(pathVerify); err == nil {
+					values := strings.Split(path, "/")
+					if _, err := strconv.Atoi(values[1]); err == nil {
 						continue
 					} else {
 
 						resultantUrl := urlParts.Scheme + "://" + urlParts.Host + "/" + path
 
-						index := strings.Index(resultantUrl, "//") // Finds the index of the first occurrence of '//'
+						index := strings.Index(resultantUrl, "//") 
 
 						if index != -1 { 
 							
 							secondIndex := strings.Index(resultantUrl[index+2:], "//")
 
-							if secondIndex != -1 { 
+							if secondIndex != -1 {
+							
 								resultantUrl = resultantUrl[:index+2+secondIndex] + "/" + resultantUrl[index+2+secondIndex+2:]
 							}
 						}
@@ -83,7 +84,7 @@ func main() {
 		}
 	}
 
-	// Remove URLs duplicados dentro da Lista
+	// Remove URLs duplicadas da lista
 	urlsMap := make(map[string]bool)
 	for _, url := range urlsList {
 		urlsMap[url] = true
@@ -94,6 +95,7 @@ func main() {
 		resultantUrlsList = append(resultantUrlsList, url)
 	}
 
+	// Printa o resultado da lista
 	for _, url := range resultantUrlsList {
 
 		fmt.Println(url)
