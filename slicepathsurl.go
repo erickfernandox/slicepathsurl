@@ -88,7 +88,7 @@ func main() {
 
 						if index != -1 {
 							secondIndex := strings.Index(resultantUrl[index+2:], "//")
-							if secondIndex != -1 { // If it finds the second occurrence of '//'
+							if secondIndex != -1 { 
 								resultantUrl = resultantUrl[:index+2+secondIndex] + "/" + resultantUrl[index+2+secondIndex+2:]
 							}
 						}
