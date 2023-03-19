@@ -20,6 +20,15 @@ func containsPercent(word string) bool {
 	return false
 }
 
+func containsSpecialChars(word string, chars string) bool {
+	for _, char := range chars {
+		if strings.ContainsRune(word, char) {
+			return true
+		}
+	}
+	return false
+}
+
 func main() {
 
 	levelPtr := flag.Int("l", 2, "Level [1, 2 or 3]")
@@ -27,7 +36,7 @@ func main() {
 
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Scan()
-	
+
 	var urlsList []string
 
 	for scanner.Scan() {
@@ -52,27 +61,34 @@ func main() {
 				if len(pathParts) < i+1 {
 					break
 				}
+
 				path := strings.Join(pathParts[:i+1], "/")
 				counter := strings.Count(path, "-")
+				chars := ":*;(){}[]@\".&"
 
-				if strings.ContainsRune(strings.TrimSuffix(path, "/"), ';') || strings.ContainsRune(strings.TrimSuffix(path, "/"), '.') || counter > 1 {
+				if containsSpecialChars(path, chars) || counter > 1 {
 					continue
 				} else {
+
 					values := strings.Split(path, "/")
-					if _, err := strconv.Atoi(values[1]); err == nil {
+					verify_numeric_values := 0
+
+					for _, value := range values {
+						if _, err := strconv.Atoi(value); err == nil {
+							verify_numeric_values = verify_numeric_values + 1
+						} else {
+							continue
+						}
+					}
+					if verify_numeric_values > 0 {
 						continue
 					} else {
-
 						resultantUrl := urlParts.Scheme + "://" + urlParts.Host + "/" + path
-
 						index := strings.Index(resultantUrl, "//") 
 
-						if index != -1 { 
-							
+						if index != -1 {
 							secondIndex := strings.Index(resultantUrl[index+2:], "//")
-
-							if secondIndex != -1 {
-							
+							if secondIndex != -1 { // If it finds the second occurrence of '//'
 								resultantUrl = resultantUrl[:index+2+secondIndex] + "/" + resultantUrl[index+2+secondIndex+2:]
 							}
 						}
@@ -84,7 +100,7 @@ func main() {
 		}
 	}
 
-	// Remove URLs duplicadas da lista
+	// Removes URls duplicadas da lista
 	urlsMap := make(map[string]bool)
 	for _, url := range urlsList {
 		urlsMap[url] = true
@@ -97,8 +113,6 @@ func main() {
 
 	// Printa o resultado da lista
 	for _, url := range resultantUrlsList {
-
 		fmt.Println(url)
 	}
-
 }
