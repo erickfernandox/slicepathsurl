@@ -96,7 +96,6 @@ https://example.com/applications/finder/search
 
 ```
 
-
 ```bash
 subfinder -d example.com | gauplus | slicepathsurl -l 2 > urls_all_paths_level2.txt
 cat urs_all_paths_level2.txt | nuclei -tags crlf,rce,redirect
