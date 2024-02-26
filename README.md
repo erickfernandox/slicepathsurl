@@ -114,7 +114,7 @@ https://example.com/level2/level3
 Next, the URLs previously acquired via gauplus can be used in conjunction with httpx to extract the three-level hierarchy of the URLs and search for the .git file at every level of the URL. An example of this is shown below:
 
 ```bash
-cat urls_all_paths_level2.txt | slicepathsurl -l 3 | httpx -path /.git/config -mr "refs/heads"
+cat urls_all_paths.txt | slicepathsurl -l 3 | httpx -path /.git/config -mr "refs/heads"
 
 https://example.com/.git/config
 https://example.com/level2/.git/config
