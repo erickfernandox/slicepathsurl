@@ -29,7 +29,7 @@ func containsSpecialChars(word string, chars string) bool {
 }
 
 func main() {
-	levelPtr := flag.Int("l", 2, "Level [1, 2 or 3]")
+	levelPtr := flag.Int("l", 2, "Level [1, 2 or ... N]")
 	flag.Parse()
 
 	scanner := bufio.NewScanner(os.Stdin)
