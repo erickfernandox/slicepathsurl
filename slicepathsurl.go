@@ -69,7 +69,7 @@ func main() {
 				if containsSpecialChars(path, chars) || counter > 1 {
 					continue
 				} else if strings.Contains(path, ".") {
-					suffixes := []string{".php", ".aspx", ".jsf", ".asp", ".html", ".jsonp", ".json", ".jsp", ".axd", ".htm", ".esp", ".cgi"}
+					suffixes := []string{".php", ".aspx", ".jsf", ".asp", ".html", ".jsonp", ".json", ".jsp", ".axd", ".htm", ".esp", ".cgi", ".do"}
 
 					// Check if the path has any of the valid suffixes
 					hasValidSuffix := false
