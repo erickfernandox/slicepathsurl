@@ -1,9 +1,7 @@
 [![made-with-Go](https://img.shields.io/badge/made%20with-Go-brightgreen.svg)](http://golang.org)
 
 <p align="center">
-[![SlicePathsURL](https://i.ibb.co/CcTx0fm/Gemini-Generated-Image-qmf7qiqmf7qiqmf7-1-1.jpg)](http://golang.org)
-[![made-with-Go](https://img.shields.io/badge/made%20with-Go-brightgreen.svg)](http://golang.org)
-  
+<img src="https://i.ibb.co/CcTx0fm/Gemini-Generated-Image-qmf7qiqmf7qiqmf7-1-1.jpg">  
 </p>
 <h2 align="center">SlicePathsURL</h2> <br>
 
