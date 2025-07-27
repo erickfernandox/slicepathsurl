@@ -11,12 +11,7 @@ import (
 )
 
 func containsPercent(word string) bool {
-	for _, char := range word {
-		if char == '%' {
-			return true
-		}
-	}
-	return false
+	return strings.Contains(word, "%")
 }
 
 func containsSpecialChars(word string, chars string) bool {
@@ -33,22 +28,26 @@ func main() {
 	flag.Parse()
 
 	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
 
 	var urlsList []string
 
 	for scanner.Scan() {
 		urlStr := scanner.Text()
+		if urlStr == "" {
+			continue
+		}
+		if !strings.HasPrefix(urlStr, "http://") && !strings.HasPrefix(urlStr, "https://") {
+			continue
+		}
 		if containsPercent(urlStr) {
 			continue
 		}
 
-		// Remove query parameters from URL
 		urlStr = strings.Split(urlStr, "?")[0]
 
 		urlParts, err := url.Parse(urlStr)
 		if err != nil {
-			panic(err)
+			continue
 		}
 
 		pathParts := strings.Split(urlParts.Path, "/")
@@ -69,9 +68,7 @@ func main() {
 				if containsSpecialChars(path, chars) || counter > 1 {
 					continue
 				} else if strings.Contains(path, ".") {
-					suffixes := []string{".php", ".php3", ".php4", ".aspx", ".jsf", ".asp", ".html", ".jsonp", ".json", ".jsp", ".axd", ".htm", ".esp", ".cgi", ".do", ".jsx", ".xhtml", ".jhtm"}
-
-					// Check if the path has any of the valid suffixes
+					suffixes := []string{".php", ".php3", ".php4", ".aspx", ".jsf", ".asp", ".html", ".jsonp", ".json", ".jsp", ".axd", ".htm", ".esp", ".cgi", ".do", ".jsx", ".xhtml", ".jhtm",".phtml",".jspx",".vue",".env",".pl"}
 					hasValidSuffix := false
 					for _, suffix := range suffixes {
 						if strings.HasSuffix(path, suffix) {
@@ -79,65 +76,46 @@ func main() {
 							break
 						}
 					}
-
-					// If a valid suffix was found, include the URL
 					if hasValidSuffix {
 						resultantUrl := urlParts.Scheme + "://" + urlParts.Host + "/" + path
-						index := strings.Index(resultantUrl, "//")
-
-						if index != -1 {
-							secondIndex := strings.Index(resultantUrl[index+2:], "//")
-							if secondIndex != -1 {
-								resultantUrl = resultantUrl[:index+2+secondIndex] + "/" + resultantUrl[index+2+secondIndex+2:]
-							}
-						}
-
-						urlsList = append(urlsList, resultantUrl)
+						urlsList = append(urlsList, cleanDoubleSlashes(resultantUrl))
 					}
 				} else {
 					values := strings.Split(path, "/")
-					verifyNumericValues := 0
-
+					hasNumber := false
 					for _, value := range values {
 						if _, err := strconv.Atoi(value); err == nil {
-							verifyNumericValues = verifyNumericValues + 1
-						} else {
-							continue
+							hasNumber = true
+							break
 						}
 					}
-					if verifyNumericValues > 0 {
+					if hasNumber {
 						continue
 					} else {
 						resultantUrl := urlParts.Scheme + "://" + urlParts.Host + "/" + path
-						index := strings.Index(resultantUrl, "//")
-
-						if index != -1 {
-							secondIndex := strings.Index(resultantUrl[index+2:], "//")
-							if secondIndex != -1 {
-								resultantUrl = resultantUrl[:index+2+secondIndex] + "/" + resultantUrl[index+2+secondIndex+2:]
-							}
-						}
-
-						urlsList = append(urlsList, resultantUrl)
+						urlsList = append(urlsList, cleanDoubleSlashes(resultantUrl))
 					}
 				}
 			}
 		}
 	}
 
-	// Removes duplicated URLs from the list
+	// Remover duplicados
 	urlsMap := make(map[string]bool)
 	for _, url := range urlsList {
 		urlsMap[url] = true
 	}
 
-	var resultantUrlsList []string
 	for url := range urlsMap {
-		resultantUrlsList = append(resultantUrlsList, url)
-	}
-
-	// Print the resulting list
-	for _, url := range resultantUrlsList {
 		fmt.Println(url)
 	}
+}
+
+func cleanDoubleSlashes(url string) string {
+	// Remove "//" no caminho sem afetar o schema (https://)
+	parts := strings.SplitN(url, "//", 3)
+	if len(parts) == 3 {
+		return parts[0] + "//" + parts[1] + "/" + strings.ReplaceAll(parts[2], "//", "/")
+	}
+	return url
 }
