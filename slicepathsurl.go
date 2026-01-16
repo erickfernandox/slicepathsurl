@@ -65,7 +65,7 @@ func main() {
 				counter := strings.Count(path, "-")
 				chars := ":*;(){}[]@\"&'+"
 
-				if containsSpecialChars(path, chars) || counter > 1 {
+				if containsSpecialChars(path, chars) || counter > 3 {
 					continue
 				} else if strings.Contains(path, ".") {
 					suffixes := []string{".php", ".php3", ".php4", ".aspx", ".jsf", ".asp", ".html", ".jsonp", ".json", ".jsp", ".axd", ".htm", ".esp", ".cgi", ".do", ".jsx", ".xhtml", ".jhtm", ".cfm"}
