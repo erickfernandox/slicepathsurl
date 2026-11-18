@@ -68,7 +68,7 @@ func main() {
 				if containsSpecialChars(path, chars) || counter > 3 {
 					continue
 				} else if strings.Contains(path, ".") {
-					suffixes := []string{".php", ".php3", ".php4", ".aspx", ".jsf", ".asp", ".html", ".jsonp", ".json", ".jsp", ".axd", ".htm", ".esp", ".cgi", ".do", ".jsx", ".xhtml", ".jhtm", ".cfm"}
+					suffixes := []string{".php", ".php3", ".php4", ".aspx", ".jsf", ".asp", ".html", ".jsonp", ".json", ".jsp", ".axd", ".htm", ".esp", ".cgi", ".do", ".jsx", ".xhtml", ".jhtm", ".cfm", ".pl"}
 					hasValidSuffix := false
 					for _, suffix := range suffixes {
 						if strings.HasSuffix(path, suffix) {
